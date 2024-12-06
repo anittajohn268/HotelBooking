@@ -2,6 +2,7 @@ export type HotelType = {
   _id: string;
   userId: string;
   name: string;
+  phone: number;
   city: string;
   country: string;
   description: string;

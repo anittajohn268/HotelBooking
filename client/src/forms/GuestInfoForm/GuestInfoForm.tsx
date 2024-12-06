@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 type Props = {
   hotelId: string;
   pricePerNight: number;
+  phone: any;
 };
 
 type GuestInfoFormData = {
@@ -16,7 +17,7 @@ type GuestInfoFormData = {
   childCount: number;
 };
 
-const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
+const GuestInfoForm = ({ hotelId, phone, pricePerNight }: Props) => {
   const search = useSearchContext();
   const { isLoggedIn } = useAppContext();
   const navigate = useNavigate();
@@ -141,15 +142,9 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
               </span>
             )}
           </div>
-          {isLoggedIn ? (
             <button className="bg-blue-600 text-white h-full p-2 font-bold hover:bg-blue-500 text-xl">
-              Book Now
+              {phone}
             </button>
-          ) : (
-            <button className="bg-blue-600 text-white h-full p-2 font-bold hover:bg-blue-500 text-xl">
-              Sign in to Book
-            </button>
-          )}
         </div>
       </form>
     </div>

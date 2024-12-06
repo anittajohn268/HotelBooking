@@ -37,17 +37,17 @@ export const signIn = async (formData: SignInFormData) => {
   return body;
 };
 
-export const validateToken = async () => {
-  const response = await fetch(`http://localhost:4000/api/auth/validate-token`, {
-     credentials: "include"
-  });
+// export const validateToken = async () => {
+//   const response = await fetch(`http://localhost:4000/api/auth/validate-token`, {
+//      credentials: "include"
+//   });
 
-  if (!response.ok) {
-    throw new Error("Token invalid");
-  }
+//   if (!response.ok) {
+//     throw new Error("Token invalid");
+//   }
 
-  return response.json();
-};
+//   return response.json();
+// };
 
 export const signOut = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
@@ -115,6 +115,35 @@ export const updateMyHotelById = async (hotelFormData: FormData) => {
   return response.json();
 };
 
+// export const deleteMyHotelById = async (hotelId: string): Promise<HotelType> => {
+//   const response = await fetch(`${API_BASE_URL}/api/my-hotels/${hotelId}`, {
+//     credentials: "include",
+//   });
+
+//   if (!response.ok) {
+//     throw new Error("Error fetching Hotels");
+//   }
+
+//   return response.json();
+// };
+
+export const deleteMyHotelById = async (hotelId: any) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/my-hotels/${hotelId}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to delete Hotel");
+  }
+
+  return response.json();
+};
+
+
 export type SearchParams = {
   destination?: string;
   checkIn?: string;
@@ -167,5 +196,13 @@ export const fetchHotelById = async (hotelId: string): Promise<HotelType> => {
     throw new Error("Error fetching Hotels");
   }
 
+  return response.json();
+};
+
+export const fetchHotels = async (): Promise<HotelType[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/hotels`);
+  if (!response.ok) {
+    throw new Error("Error fetching hotels");
+  }
   return response.json();
 };

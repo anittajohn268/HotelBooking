@@ -21,6 +21,7 @@ router.post(
   verifyToken,
   [
     body("name").notEmpty().withMessage("Name is required"),
+    body("phone").notEmpty().withMessage("Phone is required"),
     body("city").notEmpty().withMessage("City is required"),
     body("country").notEmpty().withMessage("Country is required"),
     body("description").notEmpty().withMessage("Description is required"),
@@ -116,6 +117,26 @@ router.put(
     }
   }
 );
+
+router.delete("/:id", verifyToken, async (req: Request, res: Response) => {
+  const hotelId = req.params.id;
+
+  try {
+    const hotel = await Hotel.findOneAndDelete({
+      _id: hotelId,
+      userId: req.userId,
+    });
+
+    if (!hotel) {
+      return res.status(404).json({ message: "Hotel not found or unauthorized" });
+    }
+
+    res.status(200).json({ message: "Hotel deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting hotel:", error);
+    res.status(500).json({ message: "Error deleting hotel" });
+  }
+});
 
 async function uploadImages(imageFiles: Express.Multer.File[]) {
   const uploadPromises = imageFiles.map(async (image) => {

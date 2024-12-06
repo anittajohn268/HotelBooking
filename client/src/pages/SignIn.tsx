@@ -23,7 +23,11 @@ const SignIn = () => {
   } = useForm<SignInFormData>();
 
   const mutation = useMutation(apiClient.signIn, {
-    onSuccess: async () => {
+    onSuccess: async (data) => {
+      const token = data?.token;
+      if (token) {
+        localStorage.setItem("authToken", token);
+      }
       showToast({ message: "Sign in Successful!", type: "SUCCESS" });
       await queryClient.invalidateQueries("validateToken");
       navigate(location.state?.from?.pathname || "/");
@@ -32,6 +36,7 @@ const SignIn = () => {
       showToast({ message: error.message, type: "ERROR" });
     },
   });
+  
 
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data);
