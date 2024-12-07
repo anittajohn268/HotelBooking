@@ -1,6 +1,6 @@
 import { RegisterFormData } from "./pages/Register";
 import { SignInFormData } from "./pages/SignIn";
-import { HotelSearchResponse, HotelType } from "../../backend/src/shared/types";
+import { HotelSearchResponse, HotelType } from "../../api/src/shared/types";
 const API_BASE_URL = "http://localhost:4000";
 
 export const register = async (formData: RegisterFormData) => {
@@ -37,17 +37,17 @@ export const signIn = async (formData: SignInFormData) => {
   return body;
 };
 
-// export const validateToken = async () => {
-//   const response = await fetch(`http://localhost:4000/api/auth/validate-token`, {
-//      credentials: "include"
-//   });
+export const validateToken = async () => {
+  const response = await fetch(`http://localhost:4000/api/auth/validate-token`, {
+     credentials: "include"
+  });
 
-//   if (!response.ok) {
-//     throw new Error("Token invalid");
-//   }
+  if (!response.ok) {
+    throw new Error("Token invalid");
+  }
 
-//   return response.json();
-// };
+  return response.json();
+};
 
 export const signOut = async () => {
   const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {

@@ -49,9 +49,10 @@ const MyHotels = () => {
     return <span>Loading hotels...</span>;
   }
 
-  if (isError || !hotelData?.length) {
+  if (!hotelData) {
     return <span>No Hotels found</span>;
   }
+
 
   return (
     <div className="space-y-5">
